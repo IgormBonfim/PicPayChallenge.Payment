@@ -1,0 +1,23 @@
+CREATE SCHEMA IF NOT EXISTS PicPayChallenge;
+
+USE PicPayChallenge;
+
+CREATE TABLE IF NOT EXISTS Wallet(
+	WalletId INT AUTO_INCREMENT NOT NULL,
+    Balance DECIMAL(12,2) NOT NULL,
+    PRIMARY KEY (WalletId)
+);
+
+CREATE TABLE IF NOT EXISTS User(
+	UserId INT AUTO_INCREMENT NOT NULL,
+    WalletId INT NOT NULL,
+    FullName VARCHAR(100) NOT NULL,
+    DocumentNumber VARCHAR(14) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    UserType INT NOT NULL,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL,
+    Password VARCHAR(100) NOT NULL,
+    PRIMARY KEY (UserId),
+    FOREIGN KEY (WalletId) REFERENCES Wallet(WalletId)
+);

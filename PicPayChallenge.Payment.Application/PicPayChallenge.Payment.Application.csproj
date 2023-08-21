@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PicPayChallenge.Payment.Common\PicPayChallenge.Payment.Common.csproj" />
+    <ProjectReference Include="..\PicPayChallenge.Payment.DataTransfer\PicPayChallenge.Payment.DataTransfer.csproj" />
+    <ProjectReference Include="..\PicPayChallenge.Payment.Domain\PicPayChallenge.Payment.Domain.csproj" />
+    <ProjectReference Include="..\PicPayChallenge.Payment.Infra\PicPayChallenge.Payment.Infra.csproj" />
+  </ItemGroup>
+
+</Project>
