@@ -1,10 +1,5 @@
-﻿using PicPayChallenge.Payment.Common.Validators;
-using PicPayChallenge.Payment.Domain.Generics.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PicPayChallenge.Common.Entities;
+using PicPayChallenge.Common.Validators;
 
 namespace PicPayChallenge.Payment.Domain.Users.Entities
 {

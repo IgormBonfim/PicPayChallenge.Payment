@@ -14,8 +14,8 @@ namespace PicPayChallenge.Payment.Infra.Users.Mappings
         public UserMap()
         {
             Table("User");
-            Id(x => x.Id).Column("UserId").GeneratedBy.Identity();
-            References(x => x.Wallet).Column("WalletId");
+            Id(x => x.Id).Column("UserId").GeneratedBy.Assigned();
+            References(x => x.Wallet).Column("WalletId").Cascade.All();
             Map(x => x.FullName).Column("FullName");
             Map(x => x.DocumentNumber).Column("DocumentNumber");
             Map(x => x.Email).Column("Email");

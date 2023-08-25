@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PicPayChallenge.Payment.Dat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PicPayChallenge.Payment.Domain.Tests", "PicPayChallenge.Payment.Domain.Tests\PicPayChallenge.Payment.Domain.Tests.csproj", "{F9F11DA1-6C2A-4978-BF07-ACB074789877}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PicPayChallenge.Payment.Common", "PicPayChallenge.Payment.Common\PicPayChallenge.Payment.Common.csproj", "{188D9721-288E-4300-936B-1EF13AB8F0BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PicPayChallenge.Common", "PicPayChallenge.Common\PicPayChallenge.Common.csproj", "{3BB802A9-243C-418C-8A60-C9C66D34D81D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +53,10 @@ Global
 		{F9F11DA1-6C2A-4978-BF07-ACB074789877}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9F11DA1-6C2A-4978-BF07-ACB074789877}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9F11DA1-6C2A-4978-BF07-ACB074789877}.Release|Any CPU.Build.0 = Release|Any CPU
-		{188D9721-288E-4300-936B-1EF13AB8F0BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{188D9721-288E-4300-936B-1EF13AB8F0BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{188D9721-288E-4300-936B-1EF13AB8F0BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{188D9721-288E-4300-936B-1EF13AB8F0BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BB802A9-243C-418C-8A60-C9C66D34D81D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BB802A9-243C-418C-8A60-C9C66D34D81D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BB802A9-243C-418C-8A60-C9C66D34D81D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BB802A9-243C-418C-8A60-C9C66D34D81D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

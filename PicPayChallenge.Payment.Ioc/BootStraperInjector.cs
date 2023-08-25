@@ -5,10 +5,11 @@ using Microsoft.Extensions.DependencyInjection;
 using NHibernate;
 using PicPayChallenge.Payment.Application.Users.Profiles;
 using PicPayChallenge.Payment.Application.Users.Services;
-using PicPayChallenge.Payment.Common.Filters;
+using PicPayChallenge.Common.Filters;
 using PicPayChallenge.Payment.Domain.Users.Services;
 using PicPayChallenge.Payment.Infra.Users.Mappings;
 using PicPayChallenge.Payment.Infra.Users.Repositories;
+using PicPayChallenge.Common.Profiles;
 
 namespace PicPayChallenge.Payment.Ioc
 {
@@ -31,6 +32,7 @@ namespace PicPayChallenge.Payment.Ioc
             services.AddSingleton<ISession>(factory => factory.GetService<ISessionFactory>()!.OpenSession());
 
             services.AddAutoMapper(typeof(UsersProfile));
+            services.AddAutoMapper(typeof(EnumValueProfile));
 
             services.AddMvcCore(optios =>
             {

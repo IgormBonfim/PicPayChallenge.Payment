@@ -1,14 +1,9 @@
-﻿using PicPayChallenge.Payment.Common.Exceptions;
-using PicPayChallenge.Payment.Common.Utils;
+﻿using PicPayChallenge.Common.Exceptions;
+using PicPayChallenge.Common.Utils;
 using PicPayChallenge.Payment.Domain.Users.Entities;
 using PicPayChallenge.Payment.Domain.Users.Repositories;
 using PicPayChallenge.Payment.Domain.Users.Services.Commands;
 using PicPayChallenge.Payment.Domain.Users.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PicPayChallenge.Payment.Domain.Users.Services
 {
@@ -28,7 +23,6 @@ namespace PicPayChallenge.Payment.Domain.Users.Services
             decimal initialBalance = 0M;
 
             Wallet wallet = walletsService.Instance(initialBalance);
-            wallet = walletsService.InsertWallet(wallet);
 
             return new User(command.FullName, command.DocumentNumber, command.Email, command.Password, command.UserType, wallet);
         }

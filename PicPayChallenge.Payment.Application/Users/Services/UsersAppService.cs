@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NHibernate;
 using PicPayChallenge.Payment.Application.Users.Services.Interfaces;
 using PicPayChallenge.Payment.DataTransfer.Users.Requests;
 using PicPayChallenge.Payment.Domain.Users.Entities;
@@ -16,11 +17,13 @@ namespace PicPayChallenge.Payment.Application.Users.Services
     {
         private readonly IUsersService userService;
         private readonly IMapper mapper;
+        private readonly ISession session;
 
-        public UsersAppService(IUsersService userService, IMapper mapper)
+        public UsersAppService(IUsersService userService, IMapper mapper, ISession session)
         {
             this.userService = userService;
             this.mapper = mapper;
+            this.session = session;
         }
 
         public void AuthUser(UserAuthRequest request)
@@ -30,10 +33,20 @@ namespace PicPayChallenge.Payment.Application.Users.Services
 
         public void RegisterUser(UserRegisterRequest request)
         {
-            UserInstanceCommand command = mapper.Map<UserInstanceCommand>(request);
+            try
+            {
+                session.BeginTransaction();
+                UserInstanceCommand command = mapper.Map<UserInstanceCommand>(request);
 
-            User user = userService.Instance(command);
-            userService.RegisterUser(user);
+                User user = userService.Instance(command);
+                userService.RegisterUser(user);
+                session.GetCurrentTransaction().Commit();
+            }
+            catch (Exception)
+            {
+                session.GetCurrentTransaction().Rollback();
+                throw;
+            }
         }
     }
 }

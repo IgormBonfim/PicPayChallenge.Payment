@@ -1,10 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Payment]\**" />
+    <EmbeddedResource Remove="Payment]\**" />
+    <None Remove="Payment]\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentNHibernate" Version="3.2.1" />

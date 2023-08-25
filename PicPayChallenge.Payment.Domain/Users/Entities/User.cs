@@ -1,14 +1,8 @@
-﻿using PicPayChallenge.Payment.Common.Exceptions;
-using PicPayChallenge.Payment.Common.Utils;
-using PicPayChallenge.Payment.Common.Validators;
-using PicPayChallenge.Payment.Domain.Generics.Entities;
+﻿using PicPayChallenge.Common.Entities;
+using PicPayChallenge.Common.Exceptions;
+using PicPayChallenge.Common.Utils;
+using PicPayChallenge.Common.Validators;
 using PicPayChallenge.Payment.Domain.Users.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PicPayChallenge.Payment.Domain.Users.Entities
 {
