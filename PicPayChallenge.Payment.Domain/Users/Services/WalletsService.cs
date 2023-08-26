@@ -13,9 +13,9 @@ namespace PicPayChallenge.Payment.Domain.Users.Services
             this.walletsRepository = walletsRepository;
         }
 
-        public Wallet Instance(decimal balance)
+        public Wallet Instance(int userId, decimal balance)
         {
-            return new Wallet(balance);
+            return new Wallet(userId, balance);
         }
     }
 }

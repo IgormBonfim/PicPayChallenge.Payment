@@ -22,9 +22,9 @@ namespace PicPayChallenge.Payment.Domain.Users.Services
         {
             decimal initialBalance = 0M;
 
-            Wallet wallet = walletsService.Instance(initialBalance);
+            Wallet wallet = walletsService.Instance(command.Id, initialBalance);
 
-            return new User(command.FullName, command.DocumentNumber, command.Email, command.Password, command.UserType, wallet);
+            return new User(command.Id, command.FullName, command.DocumentNumber, command.Email, command.UserType, wallet);
         }
 
         public void RegisterUser(User user)

@@ -1,15 +1,10 @@
 ﻿using AutoMapper;
 using NHibernate;
 using PicPayChallenge.Payment.Application.Users.Services.Interfaces;
-using PicPayChallenge.Payment.DataTransfer.Users.Requests;
+using PicPayChallenge.Payment.DataTransfer.Users.Facts;
 using PicPayChallenge.Payment.Domain.Users.Entities;
 using PicPayChallenge.Payment.Domain.Users.Services.Commands;
 using PicPayChallenge.Payment.Domain.Users.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PicPayChallenge.Payment.Application.Users.Services
 {
@@ -26,17 +21,12 @@ namespace PicPayChallenge.Payment.Application.Users.Services
             this.session = session;
         }
 
-        public void AuthUser(UserAuthRequest request)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RegisterUser(UserRegisterRequest request)
+        public void InsertUser(UserCreatedFact fact)
         {
             try
             {
                 session.BeginTransaction();
-                UserInstanceCommand command = mapper.Map<UserInstanceCommand>(request);
+                UserInstanceCommand command = mapper.Map<UserInstanceCommand>(fact);
 
                 User user = userService.Instance(command);
                 userService.RegisterUser(user);

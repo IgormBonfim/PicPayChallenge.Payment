@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using PicPayChallenge.Payment.DataTransfer.Users.Requests;
+using PicPayChallenge.Payment.DataTransfer.Users.Facts;
 using PicPayChallenge.Payment.Domain.Users.Services.Commands;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace PicPayChallenge.Payment.Application.Users.Profiles
     {
         public UsersProfile()
         {
-            CreateMap<UserRegisterRequest, UserInstanceCommand>();
+            CreateMap<UserCreatedFact, UserInstanceCommand>();
         }
     }
 }

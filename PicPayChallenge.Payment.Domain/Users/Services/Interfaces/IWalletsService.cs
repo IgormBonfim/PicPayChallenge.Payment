@@ -4,6 +4,6 @@ namespace PicPayChallenge.Payment.Domain.Users.Services.Interfaces
 {
     public interface IWalletsService 
     {
-        Wallet Instance(decimal balance);
+        Wallet Instance(int userId, decimal balance);
     }
 }

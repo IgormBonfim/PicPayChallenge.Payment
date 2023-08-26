@@ -11,22 +11,18 @@ namespace PicPayChallenge.Payment.Domain.Users.Entities
         public virtual string FullName { get; protected set; }
         public virtual string DocumentNumber { get; protected set; }
         public virtual string Email { get; protected set; }
-        public virtual string Password { get; protected set; }
         public virtual UserTypeEnum UserType { get; protected set; }
-        public virtual DateTime CreatedAt { get; protected set; }
-        public virtual DateTime? UpdatedAt { get; protected set; }
         public virtual Wallet Wallet { get; protected set; }
 
         public User() { }
 
-        public User(string fullName, string documentNumber, string email, string password, UserTypeEnum userType, Wallet wallet)
+        public User(int id, string fullName, string documentNumber, string email, UserTypeEnum userType, Wallet wallet)
         {
+            SetId(id);
             SetFullName(fullName);
             SetDocumentNumber(documentNumber);
             SetEmail(email);
-            SetPassword(password);
             SetUserType(userType);
-            SetCreatedAt(DateTime.Now);
             SetWallet(wallet);
         }
 
@@ -61,34 +57,12 @@ namespace PicPayChallenge.Payment.Domain.Users.Entities
             Email = email;
         }
 
-        public virtual void SetPassword(string password)
-        {
-            string propertyName = "Password";
-            password.NullValidator(propertyName);
-            password.MinLength(8, propertyName);
-
-            Password = PasswordUtil.GenerateHash(password);
-        }
-
         public virtual void SetUserType(UserTypeEnum userType)
         {
             string propertyName = "User Type";
             userType.NullValidator(propertyName);
             
             UserType = userType;
-        }
-
-        protected virtual void SetCreatedAt(DateTime createdAt)
-        {
-            string propertyName = "Created At";
-            createdAt.NullValidator(propertyName);
-
-            CreatedAt = createdAt;
-        }
-
-        public virtual void SetUpdatedAt(DateTime updatedAt)
-        {
-            UpdatedAt = updatedAt;
         }
 
         public virtual void SetWallet(Wallet wallet)

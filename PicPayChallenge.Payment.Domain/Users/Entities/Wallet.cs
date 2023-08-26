@@ -9,8 +9,9 @@ namespace PicPayChallenge.Payment.Domain.Users.Entities
 
         public Wallet() { }
 
-        public Wallet(decimal balance)
+        public Wallet(int userId, decimal balance)
         {
+            SetId(userId);
             SetBalance(balance);
         }
 

@@ -15,9 +15,6 @@ CREATE TABLE IF NOT EXISTS User(
     DocumentNumber VARCHAR(14) UNIQUE NOT NULL,
     Email VARCHAR(100) UNIQUE NOT NULL,
     UserType INT NOT NULL,
-    CreatedAt DATETIME NOT NULL,
-    UpdatedAt DATETIME NULL,
-    Password VARCHAR(100) NOT NULL,
     PRIMARY KEY (UserId),
     FOREIGN KEY (WalletId) REFERENCES Wallet(WalletId)
 );

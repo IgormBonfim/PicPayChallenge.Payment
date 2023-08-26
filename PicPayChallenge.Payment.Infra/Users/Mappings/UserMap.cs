@@ -19,10 +19,7 @@ namespace PicPayChallenge.Payment.Infra.Users.Mappings
             Map(x => x.FullName).Column("FullName");
             Map(x => x.DocumentNumber).Column("DocumentNumber");
             Map(x => x.Email).Column("Email");
-            Map(x => x.Password).Column("Password");
             Map(x => x.UserType).Column("UserType").CustomType<UserTypeEnum>();
-            Map(x => x.CreatedAt).Column("CreatedAt");
-            Map(x => x.UpdatedAt).Column("UpdatedAt");
         }
     }
 }

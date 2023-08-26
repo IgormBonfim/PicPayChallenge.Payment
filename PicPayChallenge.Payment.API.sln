@@ -19,6 +19,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PicPayChallenge.Payment.Dom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PicPayChallenge.Common", "PicPayChallenge.Common\PicPayChallenge.Common.csproj", "{3BB802A9-243C-418C-8A60-C9C66D34D81D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Consumers", "Consumers", "{12CE0364-9546-4F5F-B281-F9CEE0EA0D63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PicPyChallenge.Payment.Consumers", "PicPyChallenge.Payment.Consumers\PicPyChallenge.Payment.Consumers.csproj", "{278FFBD2-783D-4D8E-A2B1-FEB9E207F416}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,9 +61,16 @@ Global
 		{3BB802A9-243C-418C-8A60-C9C66D34D81D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BB802A9-243C-418C-8A60-C9C66D34D81D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BB802A9-243C-418C-8A60-C9C66D34D81D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{278FFBD2-783D-4D8E-A2B1-FEB9E207F416}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{278FFBD2-783D-4D8E-A2B1-FEB9E207F416}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{278FFBD2-783D-4D8E-A2B1-FEB9E207F416}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{278FFBD2-783D-4D8E-A2B1-FEB9E207F416}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{278FFBD2-783D-4D8E-A2B1-FEB9E207F416} = {12CE0364-9546-4F5F-B281-F9CEE0EA0D63}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DBB7C8C8-7CC7-46F6-99A4-9CD575B2220F}
