@@ -24,9 +24,11 @@ namespace PicPayChallenge.Payment.Application.Payments.Services
             this.mapper = mapper;
         }
 
-        public TransactionBeginResponse StartTransaction(TranscationBeginRequest request)
+        public TransactionBeginResponse StartTransaction(int userId, TranscationBeginRequest request)
         {
             TransactionInstanceCommand command = mapper.Map<TransactionInstanceCommand>(request);
+
+            command.SenderId = userId;
 
             Transaction transaction = transactionsService.Instance(command);
 

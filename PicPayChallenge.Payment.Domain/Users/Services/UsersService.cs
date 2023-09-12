@@ -44,6 +44,16 @@ namespace PicPayChallenge.Payment.Domain.Users.Services
             usersRepository.Insert(user);
         }
 
+        public User Update(UserUpdateCommand command)
+        {
+            User user = Validate(command.Id);
+
+            if (user.Wallet.Balance != command.Wallet.Balance)
+                user.Wallet.SetBalance(command.Wallet.Balance);
+
+            return usersRepository.Update(user);
+        }
+
         public User Validate(int userId)
         {
             User user = usersRepository.Get(userId);

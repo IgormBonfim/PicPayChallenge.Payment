@@ -10,6 +10,7 @@ using PicPayChallenge.Payment.Domain.Users.Services;
 using PicPayChallenge.Payment.Infra.Users.Mappings;
 using PicPayChallenge.Payment.Infra.Users.Repositories;
 using PicPayChallenge.Common.Profiles;
+using PicPayChallenge.Common.Extensions;
 
 namespace PicPayChallenge.Payment.Ioc
 {
@@ -28,6 +29,10 @@ namespace PicPayChallenge.Payment.Ioc
                                     .Mappings(x => x.FluentMappings.AddFromAssemblyOf<UserMap>())
                                     .BuildSessionFactory();
             });
+
+
+            services.ConfigureAuthentication(configuration);
+            services.AddHttpContextAccessor();
 
             services.AddSingleton<ISession>(factory => factory.GetService<ISessionFactory>()!.OpenSession());
 

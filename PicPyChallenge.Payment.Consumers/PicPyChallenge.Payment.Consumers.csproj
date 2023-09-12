@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PicPayChallenge.Common\PicPayChallenge.Common.csproj" />
     <ProjectReference Include="..\PicPayChallenge.Payment.Application\PicPayChallenge.Payment.Application.csproj" />
     <ProjectReference Include="..\PicPayChallenge.Payment.Ioc\PicPayChallenge.Payment.Ioc.csproj" />
   </ItemGroup>

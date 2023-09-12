@@ -1,4 +1,5 @@
-﻿using PicPayChallenge.Common.Responses;
+﻿
+using PicPayChallenge.Common.Responses;
 
 namespace PicPayChallenge.Payment.Application.Payments.Services.Interfaces
 {

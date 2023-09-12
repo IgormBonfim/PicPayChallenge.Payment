@@ -10,6 +10,6 @@ namespace PicPayChallenge.Payment.Application.Payments.Services.Interfaces
 {
     public interface ITransactionsAppService
     {
-        TransactionBeginResponse StartTransaction(TranscationBeginRequest request);
+        TransactionBeginResponse StartTransaction(int userId, TranscationBeginRequest request);
     }
 }

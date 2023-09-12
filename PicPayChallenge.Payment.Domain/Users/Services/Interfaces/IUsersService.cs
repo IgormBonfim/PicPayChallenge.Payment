@@ -8,5 +8,6 @@ namespace PicPayChallenge.Payment.Domain.Users.Services.Interfaces
         User Instance(UserInstanceCommand command);
         void RegisterUser(User user);
         User Validate(int userId);
+        User Update(UserUpdateCommand command);
     }
 }

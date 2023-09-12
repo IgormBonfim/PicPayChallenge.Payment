@@ -11,5 +11,7 @@ namespace PicPayChallenge.Payment.Domain.Payments.Services.Interfaces
     public interface ITransactionsService
     {
         Transaction Instance(TransactionInstanceCommand command);
+        Transaction RealizeTransaction(Transaction transaction);
+        //Transaction WalletTransaction(Transaction transaction);
     }
 }
