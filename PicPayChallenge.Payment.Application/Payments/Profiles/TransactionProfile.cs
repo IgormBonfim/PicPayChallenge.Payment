@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using PicPayChallenge.Payment.DataTransfer.Payments.Requests;
+using PicPayChallenge.Payment.DataTransfer.Payments.Responses;
+using PicPayChallenge.Payment.Domain.Payments.Entities;
 using PicPayChallenge.Payment.Domain.Payments.Services.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PicPayChallenge.Payment.Application.Payments.Profiles
 {
@@ -14,6 +11,7 @@ namespace PicPayChallenge.Payment.Application.Payments.Profiles
         public TransactionProfile()
         {
             CreateMap<TranscationBeginRequest, TransactionInstanceCommand>();
+            CreateMap<Transaction, TransactionBeginResponse>();
         }
     }
 }

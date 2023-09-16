@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PicPayChallenge.Common\PicPayChallenge.Common.csproj" />
-    <ProjectReference Include="..\PicPayChallenge.Payment.Common\PicPayChallenge.Common.csproj" />
     <ProjectReference Include="..\PicPayChallenge.Payment.DataTransfer\PicPayChallenge.Payment.DataTransfer.csproj" />
     <ProjectReference Include="..\PicPayChallenge.Payment.Domain\PicPayChallenge.Payment.Domain.csproj" />
     <ProjectReference Include="..\PicPayChallenge.Payment.Infra\PicPayChallenge.Payment.Infra.csproj" />

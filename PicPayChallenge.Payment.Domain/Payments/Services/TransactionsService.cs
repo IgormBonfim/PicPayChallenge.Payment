@@ -35,13 +35,41 @@ namespace PicPayChallenge.Payment.Domain.Payments.Services
 
         public Transaction RealizeTransaction(Transaction transaction)
         {
+            switch (transaction.PaymentMethod)
+            {
+                case Enums.PaymentMethodEnum.Wallet:
+                    transaction = WalletTransaction(transaction);
+                    break;
+
+                case Enums.PaymentMethodEnum.CreditCard:
+                    throw new NotImplementedException();
+                    break;
+
+                case Enums.PaymentMethodEnum.DebitCard:
+                    throw new NotImplementedException();
+                    break;
+
+                case Enums.PaymentMethodEnum.Boleto:
+                    throw new NotImplementedException();
+                    break;
+
+                default:
+                    throw new BusinessRuleException($"Payment Method '{transaction.PaymentMethod}' doesn't exists");
+                    break;
+            }
+
+            return transaction;
+        }
+
+        public Transaction WalletTransaction(Transaction transaction)
+        {
             if (transaction.Amount > transaction.Sender.Wallet.Balance)
                 throw new BusinessRuleException("Insufficient balance");
 
             decimal newSenderBalance = transaction.Sender.Wallet.Balance - transaction.Amount;
             decimal newRecieverBalance = transaction.Reciever.Wallet.Balance + transaction.Amount;
 
-            UserUpdateCommand senderCommand = new UserUpdateCommand 
+            UserUpdateCommand senderCommand = new UserUpdateCommand
             {
                 Id = transaction.Sender.Id,
                 Wallet = new WalletUpdateCommand
@@ -60,7 +88,7 @@ namespace PicPayChallenge.Payment.Domain.Payments.Services
                     Balance = newRecieverBalance,
                 }
             };
-            
+
             usersService.Update(recieverCommand);
 
             return transactionsRepository.Insert(transaction);

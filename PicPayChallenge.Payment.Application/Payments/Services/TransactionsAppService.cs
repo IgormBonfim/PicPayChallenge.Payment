@@ -32,7 +32,9 @@ namespace PicPayChallenge.Payment.Application.Payments.Services
 
             Transaction transaction = transactionsService.Instance(command);
 
-            throw new NotImplementedException();
+            transaction = transactionsService.RealizeTransaction(transaction);
+
+            return mapper.Map<TransactionBeginResponse>(transaction);
         }
     }
 }
