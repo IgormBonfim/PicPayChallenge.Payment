@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NHibernate;
 using PicPayChallenge.Payment.Application.Payments.Services.Interfaces;
 using PicPayChallenge.Payment.DataTransfer.Payments.Requests;
 using PicPayChallenge.Payment.DataTransfer.Payments.Responses;
@@ -17,24 +18,41 @@ namespace PicPayChallenge.Payment.Application.Payments.Services
     {
         private readonly ITransactionsService transactionsService;
         private readonly IMapper mapper;
+        private readonly ISession session;
 
-        public TransactionsAppService(ITransactionsService transactionsService, IMapper mapper)
+        public TransactionsAppService(ITransactionsService transactionsService, IMapper mapper, ISession session)
         {
             this.transactionsService = transactionsService;
             this.mapper = mapper;
+            this.session = session;
         }
 
         public TransactionBeginResponse StartTransaction(int userId, TranscationBeginRequest request)
         {
-            TransactionInstanceCommand command = mapper.Map<TransactionInstanceCommand>(request);
+            try
+            {
+                session.BeginTransaction();
 
-            command.SenderId = userId;
+                TransactionInstanceCommand command = mapper.Map<TransactionInstanceCommand>(request);
 
-            Transaction transaction = transactionsService.Instance(command);
+                command.SenderId = userId;
 
-            transaction = transactionsService.RealizeTransaction(transaction);
+                Transaction transaction = transactionsService.Instance(command);
 
-            return mapper.Map<TransactionBeginResponse>(transaction);
+                transaction = transactionsService.RealizeTransaction(transaction);
+
+                TransactionBeginResponse response = mapper.Map<TransactionBeginResponse>(transaction);
+
+                session.GetCurrentTransaction().Commit();
+
+                return response;
+
+            }
+            catch (Exception)
+            {
+                session.GetCurrentTransaction().Rollback();
+                throw;
+            }
         }
     }
 }

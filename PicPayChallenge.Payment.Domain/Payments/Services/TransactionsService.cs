@@ -4,13 +4,9 @@ using PicPayChallenge.Payment.Domain.Payments.Repositories;
 using PicPayChallenge.Payment.Domain.Payments.Services.Commands;
 using PicPayChallenge.Payment.Domain.Payments.Services.Interfaces;
 using PicPayChallenge.Payment.Domain.Users.Entities;
+using PicPayChallenge.Payment.Domain.Users.Enums;
 using PicPayChallenge.Payment.Domain.Users.Services.Commands;
 using PicPayChallenge.Payment.Domain.Users.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PicPayChallenge.Payment.Domain.Payments.Services
 {
@@ -18,11 +14,13 @@ namespace PicPayChallenge.Payment.Domain.Payments.Services
     {
         private readonly ITransactionsRepository transactionsRepository;
         private readonly IUsersService usersService;
+        private readonly IWalletsService walletsService;
 
-        public TransactionsService(ITransactionsRepository transactionsRepository, IUsersService usersService)
+        public TransactionsService(ITransactionsRepository transactionsRepository, IUsersService usersService, IWalletsService walletsService)
         {
             this.transactionsRepository = transactionsRepository;
             this.usersService = usersService;
+            this.walletsService = walletsService;
         }
 
         public Transaction Instance(TransactionInstanceCommand command)
@@ -35,6 +33,9 @@ namespace PicPayChallenge.Payment.Domain.Payments.Services
 
         public Transaction RealizeTransaction(Transaction transaction)
         {
+            if (transaction.Sender.UserType == UserTypeEnum.Store)
+                throw new BusinessRuleException("Stores can't make transaction");
+
             switch (transaction.PaymentMethod)
             {
                 case Enums.PaymentMethodEnum.Wallet:
@@ -43,19 +44,15 @@ namespace PicPayChallenge.Payment.Domain.Payments.Services
 
                 case Enums.PaymentMethodEnum.CreditCard:
                     throw new NotImplementedException();
-                    break;
 
                 case Enums.PaymentMethodEnum.DebitCard:
                     throw new NotImplementedException();
-                    break;
 
                 case Enums.PaymentMethodEnum.Boleto:
                     throw new NotImplementedException();
-                    break;
 
                 default:
                     throw new BusinessRuleException($"Payment Method '{transaction.PaymentMethod}' doesn't exists");
-                    break;
             }
 
             return transaction;
@@ -69,27 +66,21 @@ namespace PicPayChallenge.Payment.Domain.Payments.Services
             decimal newSenderBalance = transaction.Sender.Wallet.Balance - transaction.Amount;
             decimal newRecieverBalance = transaction.Reciever.Wallet.Balance + transaction.Amount;
 
-            UserUpdateCommand senderCommand = new UserUpdateCommand
+            WalletUpdateCommand senderWallet = new WalletUpdateCommand
             {
-                Id = transaction.Sender.Id,
-                Wallet = new WalletUpdateCommand
-                {
-                    Balance = newSenderBalance,
-                }
+                UserId = transaction.Sender.Id,
+                Balance = newSenderBalance,
             };
 
-            usersService.Update(senderCommand);
+            transaction.Sender.SetWallet(walletsService.Update(senderWallet));
 
-            UserUpdateCommand recieverCommand = new UserUpdateCommand
+            WalletUpdateCommand recieverWallet = new WalletUpdateCommand
             {
-                Id = transaction.Reciever.Id,
-                Wallet = new WalletUpdateCommand
-                {
-                    Balance = newRecieverBalance,
-                }
+                UserId = transaction.Reciever.Id,
+                Balance = newRecieverBalance,
             };
 
-            usersService.Update(recieverCommand);
+           transaction.Reciever.SetWallet(walletsService.Update(recieverWallet));
 
             return transactionsRepository.Insert(transaction);
         }

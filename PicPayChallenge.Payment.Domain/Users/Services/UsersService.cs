@@ -51,6 +51,7 @@ namespace PicPayChallenge.Payment.Domain.Users.Services
             if (user.Wallet.Balance != command.Wallet.Balance)
                 user.Wallet.SetBalance(command.Wallet.Balance);
 
+            
             return usersRepository.Update(user);
         }
 
