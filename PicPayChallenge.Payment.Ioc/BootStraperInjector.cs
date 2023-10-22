@@ -10,6 +10,8 @@ using PicPayChallenge.Payment.Domain.Users.Services;
 using PicPayChallenge.Payment.Infra.Users.Mappings;
 using PicPayChallenge.Payment.Infra.Users.Repositories;
 using PicPayChallenge.Common.Profiles;
+using PicPayChallenge.Common.Extensions;
+using PicPayChallenge.Payment.Ioc.Extensions;
 
 namespace PicPayChallenge.Payment.Ioc
 {
@@ -29,6 +31,9 @@ namespace PicPayChallenge.Payment.Ioc
                                     .BuildSessionFactory();
             });
 
+            services.ConfigureAuthentication(configuration);
+            services.AddHttpContextAccessor();
+
             services.AddSingleton<ISession>(factory => factory.GetService<ISessionFactory>()!.OpenSession());
 
             services.AddAutoMapper(typeof(UsersProfile));
@@ -38,6 +43,8 @@ namespace PicPayChallenge.Payment.Ioc
             {
                 optios.Filters.Add(typeof(ExceptionFilter));
             });
+
+            services.AddHttpClients(configuration);
 
             services.Scan(scan => scan.FromAssemblyOf<UsersAppService>().AddClasses().AsImplementedInterfaces().WithScopedLifetime());
             services.Scan(scan => scan.FromAssemblyOf<UsersService>().AddClasses().AsImplementedInterfaces().WithScopedLifetime());

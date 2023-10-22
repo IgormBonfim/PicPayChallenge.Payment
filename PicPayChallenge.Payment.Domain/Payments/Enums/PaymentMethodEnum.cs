@@ -20,5 +20,8 @@ namespace PicPayChallenge.Payment.Domain.Payments.Enums
 
         [Description("Boleto")]
         Boleto = 3,
+
+        [Description("Pix")]
+        Pix = 4,
     }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PicPayChallenge.Payment.Application.Payments.Services.Interfaces;
 using PicPayChallenge.Payment.DataTransfer.Payments.Requests;
@@ -17,10 +17,13 @@ namespace PicPayChallenge.Payment.API.Controllers.Payments
         }
 
         [HttpPost]
-        public IActionResult BeginTransaction(TranscationBeginRequest request)
+        [Authorize]
+        public IActionResult BeginTransaction(TranscationRequest request)
         {
-            transactionsAppService.StartTransaction(request);
-            return Ok();
+            int userId = Convert.ToInt32(User.FindFirst("userId").Value);
+
+            var response = transactionsAppService.StartTransaction(userId, request);
+            return Ok(response);
         }
     }
 }

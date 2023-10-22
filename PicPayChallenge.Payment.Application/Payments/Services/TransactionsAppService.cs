@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NHibernate;
 using PicPayChallenge.Payment.Application.Payments.Services.Interfaces;
 using PicPayChallenge.Payment.DataTransfer.Payments.Requests;
 using PicPayChallenge.Payment.DataTransfer.Payments.Responses;
@@ -17,20 +18,39 @@ namespace PicPayChallenge.Payment.Application.Payments.Services
     {
         private readonly ITransactionsService transactionsService;
         private readonly IMapper mapper;
+        private readonly ISession session;
 
-        public TransactionsAppService(ITransactionsService transactionsService, IMapper mapper)
+        public TransactionsAppService(ITransactionsService transactionsService, IMapper mapper, ISession session)
         {
             this.transactionsService = transactionsService;
             this.mapper = mapper;
+            this.session = session;
         }
 
-        public TransactionBeginResponse StartTransaction(TranscationBeginRequest request)
+        public TransactionResponse StartTransaction(int userId, TranscationRequest request)
         {
-            TransactionInstanceCommand command = mapper.Map<TransactionInstanceCommand>(request);
+            try
+            {
+                session.BeginTransaction();
 
-            Transaction transaction = transactionsService.Instance(command);
+                TransactionCommand command = mapper.Map<TransactionCommand>(request);
 
-            throw new NotImplementedException();
+                command.SenderId = userId;
+
+                Transaction transaction = transactionsService.RealizeTransaction(command);
+
+                TransactionResponse response = mapper.Map<TransactionResponse>(transaction);
+
+                session.GetCurrentTransaction().Commit();
+
+                return response;
+
+            }
+            catch (Exception)
+            {
+                session.GetCurrentTransaction().Rollback();
+                throw;
+            }
         }
     }
 }

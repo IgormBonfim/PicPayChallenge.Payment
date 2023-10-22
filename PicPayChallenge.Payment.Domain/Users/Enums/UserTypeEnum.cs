@@ -5,8 +5,8 @@ namespace PicPayChallenge.Payment.Domain.Users.Enums
     public enum UserTypeEnum
     {
         [Description("Common")]
-        Comum = 0,
+        Common = 0,
         [Description("Store")]
-        Lojista = 1,
+        Store = 1,
     }
 }
