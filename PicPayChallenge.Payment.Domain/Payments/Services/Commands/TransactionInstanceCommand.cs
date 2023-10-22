@@ -1,9 +1,4 @@
-﻿using PicPayChallenge.Payment.Domain.Payments.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PicPayChallenge.Payment.Domain.Payments.Entities;
 
 namespace PicPayChallenge.Payment.Domain.Payments.Services.Commands
 {
@@ -11,7 +6,7 @@ namespace PicPayChallenge.Payment.Domain.Payments.Services.Commands
     {
         public int SenderId { get; set; }
         public int RecieverId { get; set; }
-        public PaymentMethodEnum PaymentMethod { get; set; }
+        public PaymentData PaymentData { get; set; }
         public decimal Amount { get; set; }
     }
 }

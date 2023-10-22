@@ -19,14 +19,43 @@ CREATE TABLE IF NOT EXISTS User(
     FOREIGN KEY (WalletId) REFERENCES Wallet(WalletId)
 );
 
+CREATE TABLE IF NOT EXISTS PixPayment(
+	PixPaymentId INT AUTO_INCREMENT NOT NULL,
+	PRIMARY KEY (PixPaymentId)
+);
+
+CREATE TABLE IF NOT EXISTS CardPayment(
+	CardPaymentId INT AUTO_INCREMENT NOT NULL,
+    ChargeId VARCHAR(41) NOT NULL,
+    CardPaymentMethod INT NOT NULL,
+    Amount DECIMAL NOT NULL,
+    Installments INT NOT NULL,
+    Brand VARCHAR(20) NOT NULL,
+    LastDigits VARCHAR(4) NOT NULL,
+    AuthorizationCode INT NOT NULL,
+    NsuHost VARCHAR(20) NOT NULL,
+	PRIMARY KEY (CardPaymentId)
+);
+
+CREATE TABLE IF NOT EXISTS Payment(
+	PaymentId INT AUTO_INCREMENT NOT NULL,
+	PaymentMethod INT NOT NULL,
+    CardPaymentId INT NULL,
+    PixPaymentId INT NULL,
+	PRIMARY KEY (PaymentId),
+	FOREIGN KEY (CardPaymentId) REFERENCES CardPayment(CardPaymentId),
+	FOREIGN KEY (PixPaymentId) REFERENCES PixPayment(PixPaymentId)
+);
+
 CREATE TABLE IF NOT EXISTS Transaction(
 	TransactionId INT AUTO_INCREMENT NOT NULL, 
     SenderId INT NOT NULL,
     RecieverId INT NOT NULL,
+    PaymentId INT NOT NULL,
     Amount DECIMAL(12, 2) NOT NULL,
-    PaymentMethod INT NOT NULL,
 	TransactionDate DATETIME NOT NULL,
     PRIMARY KEY (TransactionId),
 	FOREIGN KEY (SenderId) REFERENCES User(UserId),
-	FOREIGN KEY (RecieverId) REFERENCES User(UserId)
+	FOREIGN KEY (RecieverId) REFERENCES User(UserId),
+	FOREIGN KEY (PaymentId) REFERENCES Payment(PaymentId)
 );

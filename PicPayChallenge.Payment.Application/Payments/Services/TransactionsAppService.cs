@@ -27,21 +27,19 @@ namespace PicPayChallenge.Payment.Application.Payments.Services
             this.session = session;
         }
 
-        public TransactionBeginResponse StartTransaction(int userId, TranscationBeginRequest request)
+        public TransactionResponse StartTransaction(int userId, TranscationRequest request)
         {
             try
             {
                 session.BeginTransaction();
 
-                TransactionInstanceCommand command = mapper.Map<TransactionInstanceCommand>(request);
+                TransactionCommand command = mapper.Map<TransactionCommand>(request);
 
                 command.SenderId = userId;
 
-                Transaction transaction = transactionsService.Instance(command);
+                Transaction transaction = transactionsService.RealizeTransaction(command);
 
-                transaction = transactionsService.RealizeTransaction(transaction);
-
-                TransactionBeginResponse response = mapper.Map<TransactionBeginResponse>(transaction);
+                TransactionResponse response = mapper.Map<TransactionResponse>(transaction);
 
                 session.GetCurrentTransaction().Commit();
 

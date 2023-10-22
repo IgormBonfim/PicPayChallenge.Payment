@@ -6,12 +6,12 @@ using PicPayChallenge.Payment.Domain.Payments.Services.Commands;
 
 namespace PicPayChallenge.Payment.Application.Payments.Profiles
 {
-    public class TransactionProfile : Profile
+    public class PaymentDataProfile : Profile
     {
-        public TransactionProfile()
+        public PaymentDataProfile()
         {
-            CreateMap<TranscationRequest, TransactionCommand>();
-            CreateMap<Transaction, TransactionResponse>();
+            CreateMap<PaymentDataRequest, PaymentDataCommand>();
+            CreateMap<PaymentData, PaymentDataResponse>();
         }
     }
 }

@@ -1,13 +1,7 @@
 ﻿using PicPayChallenge.Common.Entities;
 using PicPayChallenge.Common.Exceptions;
 using PicPayChallenge.Common.Validators;
-using PicPayChallenge.Payment.Domain.Payments.Enums;
 using PicPayChallenge.Payment.Domain.Users.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PicPayChallenge.Payment.Domain.Payments.Entities
 {
@@ -16,17 +10,17 @@ namespace PicPayChallenge.Payment.Domain.Payments.Entities
         public virtual User Sender { get; protected set; }
         public virtual User Reciever { get; protected set; }
         public virtual decimal Amount { get; protected set; }
-        public virtual PaymentMethodEnum PaymentMethod { get; protected set; }
+        public virtual PaymentData Payment { get; protected set; }
         public virtual DateTime TransactionDate { get; protected set; }
 
         public Transaction() { }
 
-        public Transaction(User sender, User reciever, decimal amount, PaymentMethodEnum paymentMethod)
+        public Transaction(User sender, User reciever, decimal amount, PaymentData payment)
         {
             SetSender(sender);
             SetReciever(reciever);
             SetAmount(amount);
-            SetPaymentMethod(paymentMethod);
+            SetPayment(payment);
             SetTransactionDate(DateTime.Now);
         }
 
@@ -52,11 +46,11 @@ namespace PicPayChallenge.Payment.Domain.Payments.Entities
             Amount = amount;
         }
 
-        public virtual void SetPaymentMethod(PaymentMethodEnum paymentMethod)
+        public virtual void SetPayment(PaymentData payment)
         {
-            paymentMethod.NullValidator();
+            payment.NullValidator();
 
-            PaymentMethod = paymentMethod;
+            Payment = payment;
         }
         protected virtual void SetTransactionDate(DateTime transactionDate)
         {

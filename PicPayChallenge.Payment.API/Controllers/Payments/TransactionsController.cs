@@ -18,7 +18,7 @@ namespace PicPayChallenge.Payment.API.Controllers.Payments
 
         [HttpPost]
         [Authorize]
-        public IActionResult BeginTransaction(TranscationBeginRequest request)
+        public IActionResult BeginTransaction(TranscationRequest request)
         {
             int userId = Convert.ToInt32(User.FindFirst("userId").Value);
 
