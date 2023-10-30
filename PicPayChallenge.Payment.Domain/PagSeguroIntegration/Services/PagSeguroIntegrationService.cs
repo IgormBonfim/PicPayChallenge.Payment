@@ -1,4 +1,6 @@
 ﻿using PicPayChallenge.Payment.Domain.PagSeguroIntegration.Entities;
+using PicPayChallenge.Payment.Domain.PagSeguroIntegration.Enums;
+using PicPayChallenge.Payment.Domain.PagSeguroIntegration.Exceptions;
 using PicPayChallenge.Payment.Domain.PagSeguroIntegration.Repositories;
 using PicPayChallenge.Payment.Domain.PagSeguroIntegration.Repositories.Responses;
 using PicPayChallenge.Payment.Domain.PagSeguroIntegration.Services.Commands;
@@ -16,17 +18,30 @@ namespace PicPayChallenge.Payment.Domain.PagSeguroIntegration.Services
         }
         public ChargeResponse ProcessPayment(CreateChargeCommand command)
         {
-            Amount amount = new Amount(command.Amount, "BRL");
+            int pagSeguroMultiplier = 100;
+            int pagSeguroAmount = Convert.ToInt32(command.Amount * pagSeguroMultiplier);
+
+            Amount amount = new Amount(pagSeguroAmount, "BRL");
 
             Holder holder = new Holder(command.HolderName);
 
             Card card = new Card(command.EncryptedCard, command.SecurityCode.ToString(), holder);
 
-            PaymentMethod paymentMethod = new PaymentMethod(command.PaymentMethod, command.Installments, false, "PicPayChallenge", card);
+            PaymentMethod paymentMethod = new PaymentMethod(command.PaymentMethod, command.Installments, true, "PicPayChallenge", card);
 
             Charge charge = new Charge(null, "Transaction between users", amount, paymentMethod);
 
-            return pagSeguroIntegrationRepository.CreateCharge(charge);
+            ChargeResponse response = pagSeguroIntegrationRepository.CreateCharge(charge);
+
+            ValidatePayment(response);
+
+            return response;
+        }
+
+        public void ValidatePayment(ChargeResponse charge)
+        {
+            if (charge.Status == PaymentStatusEnum.Declined)
+                throw new PaymentStatusInvalidException(charge.PaymentResponse.Code, charge.Status, charge.PaymentResponse.Message);
         }
     }
 }
