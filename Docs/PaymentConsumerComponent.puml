@@ -1,0 +1,25 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!define ICONURL https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v2.4.0
+!includeurl ICONURL/devicons2/dotnetcore.puml
+!includeurl ICONURL/devicons2/mysql.puml
+
+SHOW_PERSON_PORTRAIT()
+LAYOUT_LEFT_RIGHT()
+AddRelTag("async", $lineStyle = DashedLine())
+
+ContainerDb(PaymentDatabase, "Payment Database", "MySQL", "Stores user, balance, transactions, and payments information", $sprite="mysql")
+ContainerQueue(Broker, "UserCreated Topic", "Kafka", "userCreated data")
+
+System_Boundary(ConsumerSystem, "Payment Consumer System") {
+    Container(PaymentConsumer, "Payment Consumer", "C# .Net", "Consumes topic userCreated inserting user data in Payment Database", $sprite="dotnetcore")
+    Container(UsersService, "Users Service", "C# .Net", "Users domain service with user business rules", $sprite="dotnetcore")
+    Container(WalletsService, "Wallets Service", "C# .Net", "User's wallet domain service with wallet business rules", $sprite="dotnetcore")
+}
+
+Rel(PaymentConsumer,Broker,"Consumes from", "JSON", $tags="async")
+Rel(PaymentConsumer,UsersService,"Uses")
+Rel(UsersService,WalletsService,"Uses")
+Rel(UsersService,PaymentDatabase,"Read from and writes to", "ODBC")
+
+@enduml
