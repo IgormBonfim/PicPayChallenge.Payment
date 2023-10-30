@@ -119,10 +119,9 @@ namespace PicPayChallenge.Payment.Domain.Payments.Services
 
         public Transaction RealizeTransaction(TransactionCommand command)
         {
-            Transaction transaction = new Transaction();
+            Transaction? transaction = null;
 
             User sender = usersService.Validate(command.SenderId);
-            User reciever = usersService.Validate(command.RecieverId);
 
             if (sender.UserType == UserTypeEnum.Store)
                 throw new BusinessRuleException("Stores can't make transaction");
@@ -138,7 +137,9 @@ namespace PicPayChallenge.Payment.Domain.Payments.Services
                     break;
 
                 case PaymentMethodEnum.DebitCard:
+                    //transaction = CardTransaction(command, "DEBIT_CARD");
                     throw new NotImplementedException();
+                    break;
 
                 case PaymentMethodEnum.Boleto:
                     throw new NotImplementedException();
@@ -150,7 +151,7 @@ namespace PicPayChallenge.Payment.Domain.Payments.Services
                     throw new BusinessRuleException($"Payment Method '{command.Payment.PaymentMethod}' doesn't exists");
             }
 
-            return transaction;
+            return transaction!;
         }
 
         public Transaction WalletTransaction(Transaction transaction)

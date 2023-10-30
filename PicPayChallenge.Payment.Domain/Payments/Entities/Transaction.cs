@@ -13,7 +13,7 @@ namespace PicPayChallenge.Payment.Domain.Payments.Entities
         public virtual PaymentData Payment { get; protected set; }
         public virtual DateTime TransactionDate { get; protected set; }
 
-        public Transaction() { }
+        protected Transaction() { }
 
         public Transaction(User sender, User reciever, decimal amount, PaymentData payment)
         {
