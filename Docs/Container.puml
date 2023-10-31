@@ -4,7 +4,7 @@
 !includeurl ICONURL/devicons2/dotnetcore.puml
 !includeurl ICONURL/devicons2/mysql.puml
 !includeurl ICONURL/devicons2/flutter.puml
-!includeurl ICONURL/devicons/angular.puml
+!includeurl ICONURL/devicons/react.puml
 !includeurl ICONURL/material/web.puml
 
 SHOW_PERSON_PORTRAIT()
@@ -16,7 +16,7 @@ Person(Customer, "Customer", "PicPayChallenge customer")
 System_Ext(PagSeguroAPI, "PagSeguro API", "Payment Gateway")
 System_Boundary(PicPayChallenge, "PicPay Challenge System") {
     Container(WebApp, "Web Application", "Browser", "Delivers the static content and the Single Page Application", $sprite="web")
-    Container(Spa, "Single Page Application", "Angular TypeScript", "Provides all of the PicPayChallenge functionality to customers via their web browser.", $sprite="angular")
+    Container(Spa, "Single Page Application", "React TypeScript", "Provides all of the PicPayChallenge functionality to customers via their web browser.", $sprite="react")
     Container(Mobile, "Mobile App", "Flutter", "Provides all of the PicPayChallenge functionality to customers via their mobile device.", $sprite="flutter")
     Container(AuthApi, "Authentication API", "C# .Net", "Provides PicPayChallenge register and login functionalities via HTTPS/JSON API", $sprite="dotnetcore")
     Container(PaymentApi, "Payment API", "C# .Net", "Provides all of the PicPayChallenge Payments and Transactions functionalities via HTTPS/JSON API", $sprite="dotnetcore")

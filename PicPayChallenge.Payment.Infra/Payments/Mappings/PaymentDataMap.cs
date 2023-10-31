@@ -14,6 +14,7 @@ namespace PicPayChallenge.Payment.Infra.Payments.Mappings
             Map(x => x.PaymentMethod).Column("PaymentMethod").CustomType<PaymentMethodEnum>();
             References(x => x.CardPayment).Column("CardPaymentId");
             References(x => x.PixPayment).Column("PixPaymentId");
+            References(x => x.BoletoPayment).Column("BoletoPaymentId");
         }
     }
 }

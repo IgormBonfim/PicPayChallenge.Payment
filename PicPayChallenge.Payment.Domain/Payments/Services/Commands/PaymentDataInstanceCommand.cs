@@ -8,5 +8,6 @@ namespace PicPayChallenge.Payment.Domain.Payments.Services.Commands
         public PaymentMethodEnum PaymentMethod { get; set; }
         public CardPayment? CardPayment { get; set; }
         public PixPayment? PixPayment { get; set; }
+        public BoletoPayment? BoletoPayment { get; set; }
     }
 }

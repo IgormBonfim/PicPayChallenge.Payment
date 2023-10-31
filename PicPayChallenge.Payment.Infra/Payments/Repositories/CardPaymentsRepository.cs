@@ -5,8 +5,8 @@ using PicPayChallenge.Payment.Domain.Payments.Repositories;
 
 namespace PicPayChallenge.Payment.Infra.Payments.Repositories
 {
-    public class CardPaymentRepository : NHibernateRepository<CardPayment>, ICardPaymentRepository
+    public class CardPaymentsRepository : NHibernateRepository<CardPayment>, ICardPaymentsRepository
     {
-        public CardPaymentRepository(ISession session) : base(session) { }
+        public CardPaymentsRepository(ISession session) : base(session) { }
     }
 }

@@ -3,9 +3,9 @@ using PicPayChallenge.Payment.Domain.Payments.Services.Commands;
 
 namespace PicPayChallenge.Payment.Domain.Payments.Services.Interfaces
 {
-    public interface IPaymentDataService 
+    public interface ICardPaymentsService
     {
-        PaymentData InstanceCardPayment(PaymentDataInstanceCommand command);
-        PaymentData InstancePixPayment(PaymentDataInstanceCommand command);
+        CardPayment Instance(CardPaymentInstanceCommand command);
+        CardPayment Insert(CardPayment cardPayment);
     }
 }

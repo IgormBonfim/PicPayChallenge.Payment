@@ -5,21 +5,30 @@ namespace PicPayChallenge.Payment.Domain.PagSeguroIntegration.Repositories.Respo
     public class PaymentMethodResponse
     {
         [JsonPropertyName("type")]
-        public string Type { get; set; }
+        public string? Type { get; set; }
 
         [JsonPropertyName("installments")]
-        public int Installments { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public int? Installments { get; set; }
 
         [JsonPropertyName("capture")]
-        public bool Capture { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public bool? Capture { get; set; }
 
         [JsonPropertyName("capture_before")]
-        public DateTime CaptureBefore { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public DateTime? CaptureBefore { get; set; }
 
         [JsonPropertyName("soft_descriptor")]
-        public string SoftDescriptor { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? SoftDescriptor { get; set; }
 
         [JsonPropertyName("card")]
-        public CardResponse Card { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]        
+        public CardResponse? Card { get; set; }
+
+        [JsonPropertyName("boleto")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public BoletoResponse? Boleto { get; set; }
     }
 }
