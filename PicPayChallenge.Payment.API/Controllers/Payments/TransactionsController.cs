@@ -7,6 +7,7 @@ namespace PicPayChallenge.Payment.API.Controllers.Payments
 {
     [Route("api/transactions")]
     [ApiController]
+    [Authorize]
     public class TransactionsController : ControllerBase
     {
         private readonly ITransactionsAppService transactionsAppService;
@@ -17,12 +18,20 @@ namespace PicPayChallenge.Payment.API.Controllers.Payments
         }
 
         [HttpPost]
-        [Authorize]
         public IActionResult BeginTransaction(TranscationRequest request)
         {
             int userId = Convert.ToInt32(User.FindFirst("userId").Value);
 
             var response = transactionsAppService.StartTransaction(userId, request);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        public IActionResult List([FromQuery] TransactionListRequest request)
+        {
+            request.UserId = Convert.ToInt32(User.FindFirst("userId").Value);
+
+            var response = transactionsAppService.List(request);
             return Ok(response);
         }
     }

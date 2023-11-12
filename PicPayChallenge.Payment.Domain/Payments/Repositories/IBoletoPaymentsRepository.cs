@@ -3,7 +3,5 @@ using PicPayChallenge.Payment.Domain.Payments.Entities;
 
 namespace PicPayChallenge.Payment.Domain.Payments.Repositories
 {
-    public interface ICardPaymentRepository : INHibernateRepository<CardPayment>
-    {
-    }
+    public interface IBoletoPaymentsRepository : INHibernateRepository<BoletoPayment> { }
 }

@@ -12,6 +12,9 @@ namespace PicPayChallenge.Payment.DataTransfer.Payments.Responses
         public CardPaymentResponse? CardPayment { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public PixPaymentResponse? PixPayment { get; set; }
+        public PixPaymentResponse? PixPayment { get; set; }        
+        
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public BoletoPaymentResponse? BoletoPayment { get; set; }
     }
 }

@@ -37,14 +37,28 @@ CREATE TABLE IF NOT EXISTS CardPayment(
 	PRIMARY KEY (CardPaymentId)
 );
 
+CREATE TABLE IF NOT EXISTS BoletoPayment(
+	BoletoPaymentId INT AUTO_INCREMENT NOT NULL,
+	ChargeId VARCHAR(41) NOT NULL,
+	BoletoPagSeguroId VARCHAR(255) NOT NULL,
+    Barcode VARCHAR(255) NOT NULL,
+    Status INT NOT NULL,
+    DueDate DATETIME NOT NULL,
+    CreatedAt DATETIME NOT NULL,
+    PayedAt DATETIME NOT NULL,
+	PRIMARY KEY (BoletoPaymentId)
+);
+
 CREATE TABLE IF NOT EXISTS Payment(
 	PaymentId INT AUTO_INCREMENT NOT NULL,
 	PaymentMethod INT NOT NULL,
     CardPaymentId INT NULL,
     PixPaymentId INT NULL,
+    BoletoPaymentId INT NULL,
 	PRIMARY KEY (PaymentId),
 	FOREIGN KEY (CardPaymentId) REFERENCES CardPayment(CardPaymentId),
-	FOREIGN KEY (PixPaymentId) REFERENCES PixPayment(PixPaymentId)
+	FOREIGN KEY (PixPaymentId) REFERENCES PixPayment(PixPaymentId),
+	FOREIGN KEY (BoletoPaymentId) REFERENCES BoletoPayment(BoletoPaymentId)
 );
 
 CREATE TABLE IF NOT EXISTS Transaction(

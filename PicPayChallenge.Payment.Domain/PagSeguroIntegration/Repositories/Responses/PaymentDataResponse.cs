@@ -5,15 +5,15 @@ namespace PicPayChallenge.Payment.Domain.PagSeguroIntegration.Repositories.Respo
     public class PaymentDataResponse
     {
         [JsonPropertyName("authorization_code")]
-        public string AuthorizationCode { get; set; }
+        public string? AuthorizationCode { get; set; }
 
         [JsonPropertyName("nsu")]
-        public string Nsu { get; set; }
+        public string? Nsu { get; set; }
 
         [JsonPropertyName("reason_code")]
-        public string ReasonCode { get; set; }
+        public string? ReasonCode { get; set; }
 
         [JsonPropertyName("merchant_advice_code")]
-        public string MerchantAdviceCode { get; set; }
+        public string? MerchantAdviceCode { get; set; }
     }
 }

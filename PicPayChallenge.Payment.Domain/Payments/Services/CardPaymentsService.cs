@@ -5,11 +5,11 @@ using PicPayChallenge.Payment.Domain.Payments.Services.Interfaces;
 
 namespace PicPayChallenge.Payment.Domain.Payments.Services
 {
-    public class CardPaymentService : ICardPaymentService
+    public class CardPaymentsService : ICardPaymentsService
     {
-        private readonly ICardPaymentRepository cardPaymentRepository;
+        private readonly ICardPaymentsRepository cardPaymentRepository;
 
-        public CardPaymentService(ICardPaymentRepository cardPaymentRepository)
+        public CardPaymentsService(ICardPaymentsRepository cardPaymentRepository)
         {
             this.cardPaymentRepository = cardPaymentRepository;
         }

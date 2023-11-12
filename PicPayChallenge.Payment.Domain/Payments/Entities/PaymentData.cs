@@ -12,6 +12,7 @@ namespace PicPayChallenge.Payment.Domain.Payments.Entities
         public virtual PaymentMethodEnum PaymentMethod { get; protected set; }
         public virtual CardPayment? CardPayment { get; protected set; }
         public virtual PixPayment? PixPayment { get; protected set; }
+        public virtual BoletoPayment? BoletoPayment { get; protected set; }
 
         protected PaymentData() { }
 
@@ -32,6 +33,12 @@ namespace PicPayChallenge.Payment.Domain.Payments.Entities
         {
             SetPaymentMethod(paymentMethod);
             SetPixPayment(pixPayment);
+        }
+
+        public PaymentData(PaymentMethodEnum paymentMethod, BoletoPayment boletoPayment)
+        {
+            SetPaymentMethod(paymentMethod);
+            SetBoletoPayment(boletoPayment);
         }
 
         public virtual void SetPaymentMethod(PaymentMethodEnum paymentMethod)
@@ -55,6 +62,14 @@ namespace PicPayChallenge.Payment.Domain.Payments.Entities
                 throw new BusinessRuleException();
 
             PixPayment = pixPayment;
+        }
+
+        public virtual void SetBoletoPayment(BoletoPayment? boletoPayment)
+        {
+            if (PaymentMethod == PaymentMethodEnum.Boleto && boletoPayment.IsNull())
+                throw new BusinessRuleException();
+
+            BoletoPayment = boletoPayment;
         }
     }
 }

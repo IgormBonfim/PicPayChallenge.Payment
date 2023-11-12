@@ -22,22 +22,25 @@ namespace PicPayChallenge.Payment.Domain.Payments.Services
         private readonly IUsersService usersService;
         private readonly IWalletsService walletsService;
         private readonly IPagSeguroIntegrationService pagSeguroIntegrationService;
-        private readonly ICardPaymentService cardPaymentService;
-        private readonly IPaymentDataService paymentDataService;
+        private readonly ICardPaymentsService cardPaymentService;
+        private readonly IBoletoPaymentsService boletoPaymentsService;
+        private readonly IPaymentsDataService paymentDataService;
 
         public TransactionsService(
             ITransactionsRepository transactionsRepository, 
             IUsersService usersService, 
             IWalletsService walletsService, 
             IPagSeguroIntegrationService pagSeguroIntegrationService, 
-            ICardPaymentService cardPaymentService,
-            IPaymentDataService paymentDataService)
+            ICardPaymentsService cardPaymentService,
+            IBoletoPaymentsService boletoPaymentsService,
+            IPaymentsDataService paymentDataService)
         {
             this.transactionsRepository = transactionsRepository;
             this.usersService = usersService;
             this.walletsService = walletsService;
             this.pagSeguroIntegrationService = pagSeguroIntegrationService;
             this.cardPaymentService = cardPaymentService;
+            this.boletoPaymentsService = boletoPaymentsService;
             this.paymentDataService = paymentDataService;
         }
 
@@ -55,7 +58,7 @@ namespace PicPayChallenge.Payment.Domain.Payments.Services
                 PaymentMethod = paymentMethod,
             };
 
-            ChargeResponse charge = pagSeguroIntegrationService.ProcessPayment(paymentCommand);
+            ChargeResponse charge = pagSeguroIntegrationService.CardPayment(paymentCommand);
 
             CardPaymentInstanceCommand paymentInstanceCommand = new CardPaymentInstanceCommand
             {
@@ -67,7 +70,6 @@ namespace PicPayChallenge.Payment.Domain.Payments.Services
                 LastDigits = charge.PaymentMethod.Card.LastDigits,
                 AuthorizationCode = Convert.ToInt32(charge.PaymentResponse.PaymentData.AuthorizationCode),
                 NsuHost = charge.PaymentResponse.PaymentData.Nsu,
-
             };
 
             CardPayment cardPayment = cardPaymentService.Instance(paymentInstanceCommand);
@@ -102,6 +104,41 @@ namespace PicPayChallenge.Payment.Domain.Payments.Services
             transaction.Reciever.SetWallet(walletsService.Update(recieverWallet));
 
             return Insert(transaction);
+        }
+
+        public Transaction BoletoTransaction(TransactionCommand command)
+        {
+            User sender = usersService.Validate(command.SenderId);
+
+            ProcessBoletoPaymentCommand processBoletoPaymentCommand = new ProcessBoletoPaymentCommand
+            {
+                Amount = command.Amount,
+                Payment = command.Payment.BoletoPayment,
+                Sender = sender
+            };
+
+            BoletoPayment boletoPayment = boletoPaymentsService.ProcessPayment(processBoletoPaymentCommand);
+
+            PaymentDataInstanceCommand paymentDataInstanceCommand = new PaymentDataInstanceCommand
+            {
+                PaymentMethod = command.Payment.PaymentMethod,
+                BoletoPayment = boletoPayment,
+            };
+
+            PaymentData paymentData = paymentDataService.InstanceBoletoPayment(paymentDataInstanceCommand);
+
+            TransactionInstanceCommand transactionInstanceCommand = new TransactionInstanceCommand
+            {
+                Amount = command.Amount,
+                PaymentData = paymentData,
+                RecieverId = command.RecieverId,
+                SenderId = command.SenderId,
+            };
+
+            Transaction transaction = Instance(transactionInstanceCommand);
+            transaction = Insert(transaction);
+
+            return transaction;
         }
 
         public Transaction Insert(Transaction transaction)
@@ -142,7 +179,8 @@ namespace PicPayChallenge.Payment.Domain.Payments.Services
                     break;
 
                 case PaymentMethodEnum.Boleto:
-                    throw new NotImplementedException();
+                    transaction = BoletoTransaction(command);
+                    break;
 
                 case PaymentMethodEnum.Pix:
                     throw new NotImplementedException();

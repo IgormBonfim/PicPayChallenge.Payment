@@ -16,12 +16,18 @@ namespace PicPayChallenge.Payment.Domain.PagSeguroIntegration.Services
         {
             this.pagSeguroIntegrationRepository = pagSeguroIntegrationRepository;
         }
-        public ChargeResponse ProcessPayment(CreateChargeCommand command)
+        public ChargeResponse ProcessPayment(Charge charge)
         {
-            int pagSeguroMultiplier = 100;
-            int pagSeguroAmount = Convert.ToInt32(command.Amount * pagSeguroMultiplier);
+            ChargeResponse response = pagSeguroIntegrationRepository.CreateCharge(charge);
 
-            Amount amount = new Amount(pagSeguroAmount, "BRL");
+            ValidatePayment(response);
+
+            return response;
+        }
+
+        public ChargeResponse CardPayment(CreateChargeCommand command) 
+        {
+            Amount amount = InstanceAmount(command.Amount);
 
             Holder holder = new Holder(command.HolderName);
 
@@ -31,11 +37,42 @@ namespace PicPayChallenge.Payment.Domain.PagSeguroIntegration.Services
 
             Charge charge = new Charge(null, "Transaction between users", amount, paymentMethod);
 
-            ChargeResponse response = pagSeguroIntegrationRepository.CreateCharge(charge);
+            return ProcessPayment(charge);
+        }
 
-            ValidatePayment(response);
+        public ChargeResponse BoletoPayment(BoletoChargeCommand command)
+        {
+            Amount amount = InstanceAmount(command.Amount);
 
-            return response;
+            InstructionLines instructionLines = new InstructionLines(command.InstructionLines.Line1, command.InstructionLines.Line2);
+
+            Address address = new Address(
+                command.Holder.Address.Country, 
+                command.Holder.Address.Region, 
+                command.Holder.Address.RegionCode, 
+                command.Holder.Address.City, 
+                command.Holder.Address.PostalCode, 
+                command.Holder.Address.Street, 
+                command.Holder.Address.Number, 
+                command.Holder.Address.Locality);
+
+            BoletoHolder holder = new BoletoHolder(command.Holder.Name, command.Holder.TaxId, command.Holder.Email, address);
+
+            Boleto boleto = new Boleto(command.DueDate, instructionLines, holder);
+
+            PaymentMethod paymentMethod = new PaymentMethod("BOLETO", boleto);
+
+            Charge charge = new Charge(null, "Transaction between users using boleto payment method", amount, paymentMethod);
+
+            return ProcessPayment(charge);
+        }
+
+        public Amount InstanceAmount(decimal amount)
+        {
+            int pagSeguroMultiplier = 100;
+            int pagSeguroAmount = Convert.ToInt32(amount * pagSeguroMultiplier);
+
+            return new Amount(pagSeguroAmount, "BRL");
         }
 
         public void ValidatePayment(ChargeResponse charge)

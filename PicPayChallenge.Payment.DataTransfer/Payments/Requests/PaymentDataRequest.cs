@@ -5,5 +5,6 @@
         public int PaymentMethod { get; set; }
         public CardPaymentRequest? CardPayment { get; set; }
         public PixPaymentRequest? PixPayment { get; set; }
+        public BoletoPaymentRequest? BoletoPayment { get; set; }
     }
 }

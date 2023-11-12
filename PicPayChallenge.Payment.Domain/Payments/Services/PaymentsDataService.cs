@@ -4,12 +4,18 @@ using PicPayChallenge.Payment.Domain.Payments.Services.Interfaces;
 
 namespace PicPayChallenge.Payment.Domain.Payments.Services
 {
-    public class PaymentDataService : IPaymentDataService
+    public class PaymentsDataService : IPaymentsDataService
     {
-        public PaymentDataService()
+        public PaymentsDataService()
         {
             
         }
+
+        public PaymentData InstanceBoletoPayment(PaymentDataInstanceCommand command)
+        {
+            return new PaymentData(command.PaymentMethod, command.BoletoPayment);
+        }
+
         public PaymentData InstanceCardPayment(PaymentDataInstanceCommand command)
         {
             return new PaymentData(command.PaymentMethod, command.CardPayment);
