@@ -2,6 +2,7 @@
 using NHibernate;
 using PicPayChallenge.Payment.Application.Users.Services.Interfaces;
 using PicPayChallenge.Payment.DataTransfer.Users.Facts;
+using PicPayChallenge.Payment.DataTransfer.Users.Responses;
 using PicPayChallenge.Payment.Domain.Users.Entities;
 using PicPayChallenge.Payment.Domain.Users.Services.Commands;
 using PicPayChallenge.Payment.Domain.Users.Services.Interfaces;
@@ -19,6 +20,12 @@ namespace PicPayChallenge.Payment.Application.Users.Services
             this.userService = userService;
             this.mapper = mapper;
             this.session = session;
+        }
+
+        public UserResponse Get(int id)
+        {
+            User user = userService.Validate(id);
+            return mapper.Map<UserResponse>(user);
         }
 
         public void InsertUser(UserCreatedFact fact)

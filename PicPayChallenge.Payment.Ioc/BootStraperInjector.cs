@@ -34,7 +34,7 @@ namespace PicPayChallenge.Payment.Ioc
             services.ConfigureAuthentication(configuration);
             services.AddHttpContextAccessor();
 
-            services.AddSingleton<ISession>(factory => factory.GetService<ISessionFactory>()!.OpenSession());
+            services.AddScoped<ISession>(factory => factory.GetService<ISessionFactory>()!.OpenSession());
 
             services.AddAutoMapper(typeof(UsersProfile));
             services.AddAutoMapper(typeof(EnumValueProfile));

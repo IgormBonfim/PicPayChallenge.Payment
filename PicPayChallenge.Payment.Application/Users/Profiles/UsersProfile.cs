@@ -12,6 +12,7 @@ namespace PicPayChallenge.Payment.Application.Users.Profiles
         {
             CreateMap<UserCreatedFact, UserInstanceCommand>();
             CreateMap<User, UserTransactionResponse>();
+            CreateMap<User, UserResponse>();
         }
     }
 }
