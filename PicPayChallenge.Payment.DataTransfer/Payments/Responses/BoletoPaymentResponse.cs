@@ -4,6 +4,7 @@ namespace PicPayChallenge.Payment.DataTransfer.Payments.Responses
 {
     public class BoletoPaymentResponse
     {
+        public int Id { get; set; }
         public string ChargeId { get; set; }
         public string BoletoPagSeguroId { get; set; }
         public string Barcode { get; set; }

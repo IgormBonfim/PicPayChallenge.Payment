@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PicPayChallenge.Payment.Application.Payments.Services.Interfaces;
 
@@ -14,6 +15,8 @@ namespace PicPayChallenge.Payment.API.Controllers.Payments
         {
             this.paymentMethodsAppService = paymentMethodsAppService;
         }
+
+        [Authorize]
         [HttpGet]
         public IActionResult GetAll()
         {
